@@ -34,7 +34,7 @@ public class MealDTO extends BaseDTO<Meal> {
         this.sugar = meal.getSugar();
         this.description = meal.getDescription();
         this.image = meal.getImage() != null ?
-                Constants.UPLOAD_PATH + "meal-images/".concat(meal.getImage().substring(meal.getImage().lastIndexOf("\\") + 1)) : null;
+                Constants.UPLOAD_PATH + "meal-images/".concat(meal.getImage().substring(meal.getImage().lastIndexOf("/") + 1)) : null;
         this.name = meal.getName();
     }
 
