@@ -1,7 +1,14 @@
-FROM gradle:7.2-jdk11
+FROM gradle:7.2-jdk11 AS build
 
-WORKDIR /nutrifit
+WORKDIR /app
 COPY . .
-RUN gradle clean build
 
-CMD gradle bootRun
+RUN gradle clean build --no-daemon
+
+FROM openjdk:11-jre-slim
+
+WORKDIR /app
+
+COPY --from=build /app/build/libs/*.jar app.jar
+
+CMD ["java", "-Xmx256m", "-jar", "app.jar"]
