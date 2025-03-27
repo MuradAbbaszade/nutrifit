@@ -16,7 +16,7 @@ services:
       context: .
     container_name: nutrifit-app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/nutrifit
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container2:3306/nutrifit
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 1234
     ports:
