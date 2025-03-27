@@ -4,6 +4,7 @@ import az.m10.auth.UserDetailsService;
 import az.m10.domain.User;
 import az.m10.dto.UserMealDTO;
 import az.m10.service.UserMealService;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,15 +40,21 @@ public class UserMealController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserMealDTO>> getUserMealsByDate(Principal principal,
-                                                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        List<UserMealDTO> userMeals = userMealService.getUserMealsByDate(getAuthenticatedUserId(principal), date);
+    public ResponseEntity<Page<UserMealDTO>> getUserMealsByDate(
+            Principal principal,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<UserMealDTO> userMeals = userMealService.getUserMealsByDate(getAuthenticatedUserId(principal), date, page, size);
         return ResponseEntity.ok(userMeals);
     }
 
     @GetMapping("/by-user")
-    public ResponseEntity<List<UserMealDTO>> findAllByUserId(Principal principal) {
-        List<UserMealDTO> userMeals = userMealService.findAllByUserId(getAuthenticatedUserId(principal));
+    public ResponseEntity<Page<UserMealDTO>> findAllByUserId(
+            Principal principal,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<UserMealDTO> userMeals = userMealService.findAllByUserId(getAuthenticatedUserId(principal), page, size);
         return ResponseEntity.ok(userMeals);
     }
 

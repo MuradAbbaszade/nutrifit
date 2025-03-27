@@ -6,5 +6,6 @@ CREATE TABLE `meals` (
                          `sugar` DECIMAL(10,2) NOT NULL,
                          `carbs` DECIMAL(10,2) NOT NULL,
                          `description` TEXT,
+                         `type` VARCHAR(20),
                          `image` VARCHAR(500)
 );

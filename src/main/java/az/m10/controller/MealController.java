@@ -1,9 +1,11 @@
 package az.m10.controller;
 
+import az.m10.domain.enums.MealType;
 import az.m10.dto.ImageDTO;
 import az.m10.dto.MealDTO;
 import az.m10.service.MealService;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -59,7 +61,22 @@ public class MealController {
     }
 
     @GetMapping
-    public List<MealDTO> findAll() {
-        return mealService.findAll();
+    public ResponseEntity<Page<MealDTO>> findAll(@RequestParam(defaultValue = "0") int page,
+                                                 @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(mealService.findAll(page, size));
+    }
+
+    @GetMapping("/type/{type}")
+    public ResponseEntity<Page<MealDTO>> findByType(@PathVariable MealType type,
+                                                    @RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(mealService.findByType(type, page, size));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<MealDTO>> findByName(@RequestParam String name,
+                                                    @RequestParam(defaultValue = "0") int page,
+                                                    @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(mealService.findByName(name, page, size));
     }
 }

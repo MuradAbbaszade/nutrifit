@@ -1,9 +1,9 @@
 package az.m10.domain;
 
 import az.m10.config.Constants;
+import az.m10.domain.enums.MealType;
 import az.m10.dto.MealDTO;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -30,6 +30,9 @@ public class Meal extends BaseEntity<MealDTO> {
 
     private String image;
 
+    @Enumerated(EnumType.STRING)
+    private MealType type;
+
     @Override
     public MealDTO toDto() {
         return MealDTO.builder()
@@ -40,6 +43,7 @@ public class Meal extends BaseEntity<MealDTO> {
                 .sugar(this.sugar)
                 .carbs(this.carbs)
                 .description(this.description)
+                .type(this.type)
                 .image(this.image != null ?
                         Constants.UPLOAD_PATH + "meal-images/".concat(this.image.substring(this.image.lastIndexOf("\\") + 1)) : null)
                 .build();

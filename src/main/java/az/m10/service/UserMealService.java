@@ -8,6 +8,9 @@ import az.m10.exception.CustomNotFoundException;
 import az.m10.repository.MealRepository;
 import az.m10.repository.UserMealRepository;
 import az.m10.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,13 +53,13 @@ public class UserMealService {
         userMealRepository.deleteByUserIdAndMealIdAndDate(userId, mealId, today);
     }
 
-    public List<UserMealDTO> getUserMealsByDate(Long userId, LocalDate date) {
-        List<UserMeal> userMeals = userMealRepository.findByUserIdAndDate(userId, date);
-        return userMeals.stream().map(UserMeal::toDto).collect(Collectors.toList());
+    public Page<UserMealDTO> getUserMealsByDate(Long userId, LocalDate date, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return userMealRepository.findByUserIdAndDate(userId, date, pageable).map(UserMeal::toDto);
     }
 
-    public List<UserMealDTO> findAllByUserId(Long userId) {
-        List<UserMeal> userMeals = userMealRepository.findByUserId(userId);
-        return userMeals.stream().map(UserMeal::toDto).collect(Collectors.toList());
+    public Page<UserMealDTO> findAllByUserId(Long userId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return userMealRepository.findByUserId(userId, pageable).map(UserMeal::toDto);
     }
 }

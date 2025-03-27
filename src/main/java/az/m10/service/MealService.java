@@ -1,16 +1,21 @@
 package az.m10.service;
 
 import az.m10.domain.Meal;
+import az.m10.domain.enums.MealType;
 import az.m10.dto.MealDTO;
 import az.m10.exception.CustomNotFoundException;
 import az.m10.repository.MealRepository;
 import az.m10.util.FileUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MealService {
@@ -41,15 +46,6 @@ public class MealService {
         mealRepository.deleteById(id);
     }
 
-    public List<MealDTO> findAll() {
-        List<Meal> entities = mealRepository.findAll();
-        List<MealDTO> dtos = new ArrayList<>();
-        for (Meal entity : entities) {
-            dtos.add(entity.toDto());
-        }
-        return dtos;
-    }
-
     public MealDTO update(Long id, MealDTO dto, MultipartFile profileImageFile) {
         Meal meal = mealRepository.findById(id).orElseThrow(
                 () -> new CustomNotFoundException("Entity not found.")
@@ -60,5 +56,20 @@ public class MealService {
         }
         mealRepository.save(meal);
         return meal.toDto();
+    }
+
+    public Page<MealDTO> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return mealRepository.findAll(pageable).map(Meal::toDto);
+    }
+
+    public Page<MealDTO> findByType(MealType type, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return mealRepository.findByType(type, pageable).map(Meal::toDto);
+    }
+
+    public Page<MealDTO> findByName(String name, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return mealRepository.findByName(name, pageable).map(Meal::toDto);
     }
 }

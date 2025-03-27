@@ -2,6 +2,7 @@ package az.m10.dto;
 
 import az.m10.config.Constants;
 import az.m10.domain.Meal;
+import az.m10.domain.enums.MealType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class MealDTO extends BaseDTO<Meal> {
     private BigDecimal sugar;
     private BigDecimal carbs;
     private String description;
+    private MealType type;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String image;
 
