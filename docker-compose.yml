@@ -1,33 +1,15 @@
 version: '3.8'
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql-container2
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: nutrifit
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      interval: 10s
-      retries: 5
-
   app:
     build:
       context: .
     container_name: nutrifit-app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container2:3306/nutrifit
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dpg-cvis14ogjchc73bvocn0-a.oregon-postgres.render.com:5432/nutrifit_g7ml
+      SPRING_DATASOURCE_USERNAME: nutrifit_g7ml_user
+      SPRING_DATASOURCE_PASSWORD: rchjjNjafmPptMRm78kDKU9Hai5v7syI
     ports:
       - "8080:8080"
-    depends_on:
-      mysql:
-        condition: service_healthy
 
 volumes:
   mysql-data:

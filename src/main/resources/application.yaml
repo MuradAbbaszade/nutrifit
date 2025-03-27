@@ -1,21 +1,17 @@
 spring:
-  #  jpa:
-  #    show-sql: true
-  #    properties:
-  #      hibernate:
-  #        format_sql: true
-  globalcors:
-    corsConfigurations:
-      '[/**]':
-        allowedOrigins: "*"
-        allowedHeaders: "*"
-        allowedMethods: "*"
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: &connectionUrl jdbc:mysql://mysql-container2:3306/nutrifit?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
-    username: root
-    password: 1234
+    url: jdbc:postgresql://dpg-cvis14ogjchc73bvocn0-a.oregon-postgres.render.com:5432/nutrifit_g7ml
+    username: nutrifit_g7ml_user
+    password: rchjjNjafmPptMRm78kDKU9Hai5v7syI
+    driverClassName: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
 
