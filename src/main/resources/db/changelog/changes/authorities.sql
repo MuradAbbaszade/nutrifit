@@ -1,4 +1,4 @@
-CREATE TABLE `authorities` (
-                        `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-                        `authority` varchar(255)
+CREATE TABLE authorities (
+                             id BIGSERIAL PRIMARY KEY,
+                             authority VARCHAR(255)
 );

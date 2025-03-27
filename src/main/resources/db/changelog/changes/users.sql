@@ -1,9 +1,14 @@
-CREATE TABLE `users` (
-                        `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-                        `username` varchar(255) NOT NULL ,
-                        `password` varchar(255) NOT NULL ,
-                        `full_name` varchar(255) NOT NULL ,
-                        `profile_image_url` varchar(500),
-                        `is_enabled` boolean NOT NULL
+CREATE TABLE users (
+                       id BIGSERIAL PRIMARY KEY,
+                       username VARCHAR(255) NOT NULL UNIQUE,
+                       password VARCHAR(255) NOT NULL,
+                       full_name VARCHAR(255) NOT NULL,
+                       profile_image_url VARCHAR(500),
+                       is_enabled BOOLEAN NOT NULL,
+                       gender VARCHAR(10),
+                       age INT,
+                       height FLOAT,
+                       weight FLOAT,
+                       goal VARCHAR(20),
+                       activity_level VARCHAR(20)
 );
-
