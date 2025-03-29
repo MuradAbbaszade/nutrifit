@@ -47,7 +47,7 @@ public class Meal extends BaseEntity<MealDTO> {
                 .description(this.description)
                 .type(this.type)
                 .image(this.image != null ?
-                        Constants.UPLOAD_PATH + "meal-images/".concat(this.image.substring(this.image.lastIndexOf("\\") + 1)) : null)
+                        Constants.UPLOAD_PATH + "meal-images/".concat(this.image.substring(this.image.lastIndexOf("/") + 1)) : null)
                 .build();
     }
 

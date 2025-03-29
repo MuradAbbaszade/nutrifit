@@ -31,6 +31,7 @@ public class UserService {
     }
 
     public UserDTO add(UserDTO dto) {
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         User user = userRepository.save(dto.toEntity(Optional.of(new User())));
         return user.toDto();
     }
