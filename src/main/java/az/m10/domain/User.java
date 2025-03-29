@@ -82,7 +82,7 @@ public class User extends BaseEntity<UserDTO> implements UserDetails {
                 .id(this.id)
                 .fullName(this.fullName)
                 .profileImageUrl(this.profileImageUrl != null ?
-                        Constants.UPLOAD_PATH + "profile-images/".concat(this.profileImageUrl.substring(this.profileImageUrl.lastIndexOf("\\") + 1)) : null)
+                        Constants.UPLOAD_PATH + "profile-images/".concat(this.profileImageUrl.substring(this.profileImageUrl.lastIndexOf("/") + 1)) : null)
                 .password(this.password)
                 .username(this.username)
                 .gender(this.gender)

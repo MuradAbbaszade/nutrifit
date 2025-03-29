@@ -20,6 +20,7 @@ public class Meal extends BaseEntity<MealDTO> {
     private Long id;
 
     private String name;
+    private BigDecimal cal;
     private BigDecimal protein;
     private BigDecimal fat;
     private BigDecimal sugar;
@@ -38,6 +39,7 @@ public class Meal extends BaseEntity<MealDTO> {
         return MealDTO.builder()
                 .id(this.id)
                 .name(this.name)
+                .cal(this.cal)
                 .protein(this.protein)
                 .fat(this.fat)
                 .sugar(this.sugar)
