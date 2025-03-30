@@ -5,6 +5,7 @@ import az.m10.dto.UserMealDTO;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -38,6 +39,8 @@ public class UserMeal extends BaseEntity<UserMealDTO> {
     @Column(nullable = false)
     private LocalDate date;
 
+    private BigDecimal quantity;
+
     @Override
     public UserMealDTO toDto() {
         return UserMealDTO.builder()
@@ -46,6 +49,7 @@ public class UserMeal extends BaseEntity<UserMealDTO> {
                 .meal(Optional.ofNullable(this.meal).map(MealDTO::new).orElse(null))
                 .mealId(this.mealId)
                 .date(this.date)
+                .quantity(this.quantity)
                 .build();
     }
 }

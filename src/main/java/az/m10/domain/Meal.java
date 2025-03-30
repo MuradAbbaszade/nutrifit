@@ -2,6 +2,7 @@ package az.m10.domain;
 
 import az.m10.config.Constants;
 import az.m10.domain.enums.MealType;
+import az.m10.domain.enums.UnitType;
 import az.m10.dto.MealDTO;
 import lombok.*;
 
@@ -34,6 +35,9 @@ public class Meal extends BaseEntity<MealDTO> {
     @Enumerated(EnumType.STRING)
     private MealType type;
 
+    @Enumerated(EnumType.STRING)
+    private UnitType unitType;
+
     @Override
     public MealDTO toDto() {
         return MealDTO.builder()
@@ -46,6 +50,7 @@ public class Meal extends BaseEntity<MealDTO> {
                 .carbs(this.carbs)
                 .description(this.description)
                 .type(this.type)
+                .unitType(this.unitType)
                 .image(this.image != null ?
                         Constants.UPLOAD_PATH + "meal-images/".concat(this.image.substring(this.image.lastIndexOf("/") + 1)) : null)
                 .build();

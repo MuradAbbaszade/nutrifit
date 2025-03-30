@@ -3,6 +3,7 @@ package az.m10.dto;
 import az.m10.config.Constants;
 import az.m10.domain.Meal;
 import az.m10.domain.enums.MealType;
+import az.m10.domain.enums.UnitType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -32,6 +33,8 @@ public class MealDTO extends BaseDTO<Meal> {
     private String description;
     @NotNull
     private MealType type;
+    @NotNull
+    private UnitType unitType;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String image;
 
@@ -44,6 +47,7 @@ public class MealDTO extends BaseDTO<Meal> {
         this.sugar = meal.getSugar();
         this.description = meal.getDescription();
         this.type = meal.getType();
+        this.unitType = meal.getUnitType();
         this.image = meal.getImage() != null ?
                 Constants.UPLOAD_PATH + "meal-images/".concat(meal.getImage().substring(meal.getImage().lastIndexOf("/") + 1)) : null;
         this.name = meal.getName();
@@ -61,6 +65,7 @@ public class MealDTO extends BaseDTO<Meal> {
         entity.setDescription(this.description);
         entity.setImage(this.image);
         entity.setType(this.type);
+        entity.setUnitType(this.unitType);
         return entity;
     }
 }

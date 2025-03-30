@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -28,8 +29,8 @@ public class UserMealController {
     }
 
     @PostMapping
-    public ResponseEntity<UserMealDTO> addUserMeal(Principal principal, @RequestParam Long mealId) {
-        UserMealDTO userMeal = userMealService.addUserMeal(getAuthenticatedUserId(principal), mealId);
+    public ResponseEntity<UserMealDTO> addUserMeal(Principal principal, @RequestParam Long mealId, @RequestParam BigDecimal quantity) {
+        UserMealDTO userMeal = userMealService.addUserMeal(getAuthenticatedUserId(principal), mealId, quantity);
         return ResponseEntity.ok(userMeal);
     }
 
