@@ -13,3 +13,7 @@ databaseChangeLog:
       file: classpath:/db/changelog/changes/user_favorit_meals.sql
   - include:
       file: classpath:/db/changelog/changes/modify_meals_table.sql
+  - include:
+      file: classpath:/db/changelog/changes/add_unit_type_to_meals_table.sql
+  - include:
+      file: classpath:/db/changelog/changes/add_quantity_to_user_meal_table.sql
