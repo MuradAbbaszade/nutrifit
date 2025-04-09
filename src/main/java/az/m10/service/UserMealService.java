@@ -66,7 +66,7 @@ public class UserMealService {
 
     public UserMealResponse findAllByUserId(Long userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<UserMealDTO> userMealDTOS = userMealRepository.findByUserId(userId, pageable).map(UserMeal::toDto);
+        Page<UserMealDTO> userMealDTOS = userMealRepository.findByUserIdAndDate(userId, LocalDate.now(), pageable).map(UserMeal::toDto);
         TotalMealValuesDTO totalValues = calculateTotalMealValues(userMealDTOS);
 
         return new UserMealResponse(userMealDTOS, totalValues);
@@ -86,7 +86,7 @@ public class UserMealService {
             BigDecimal quantity = userMealDTO.getQuantity();
 
             BigDecimal multiplier = isWeightOrVolumeUnit(userMealDTO.getMeal().getUnitType())
-                    ? quantity.subtract(unitAdjustment)
+                    ? quantity.divide(unitAdjustment)
                     : quantity;
 
             totalProtein = totalProtein.add(meal.getProtein().multiply(multiplier));
