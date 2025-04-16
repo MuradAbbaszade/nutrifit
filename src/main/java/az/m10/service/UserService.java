@@ -81,12 +81,14 @@ public class UserService {
         double tdee = bmr * getActivityMultiplier(user.getActivityLevel());
         double calories = adjustCaloriesForGoal(tdee, user.getGoal());
 
-        double protein = user.getWeight() * 2.0;
-        double fat = (calories * 0.25) / 9;
-        double remainingCalories = calories - (protein * 4 + fat * 9);
-        double carbs = remainingCalories / 4;
+        double proteinCalories = calories * 0.25;
+        double fatCalories = calories * 0.25;
+        double carbsCalories = calories * 0.50;
+        double protein = proteinCalories / 4;
+        double fat = fatCalories / 9;
+        double carbs = carbsCalories / 4;
         double sugar = carbs * 0.15;
-        return new NutritionRequirement(remainingCalories, protein, fat, carbs, sugar);
+        return new NutritionRequirement(calories, protein, fat, carbs, sugar);
     }
 
     private double calculateBMR(User user) {
