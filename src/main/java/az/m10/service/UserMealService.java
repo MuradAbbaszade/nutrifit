@@ -67,7 +67,7 @@ public class UserMealService {
 
     public UserMealResponse getUserMealsByDateAndType(Long userId, LocalDate date, MealType type, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<UserMealDTO> userMealDTOS = userMealRepository.findByUserIdAndDateAndType(userId, date, type, pageable).map(UserMeal::toDto);
+        Page<UserMealDTO> userMealDTOS = userMealRepository.findByUserIdAndDateAndMealType(userId, date, type, pageable).map(UserMeal::toDto);
         TotalMealValuesDTO totalValues = calculateTotalMealValues(userMealDTOS);
 
         return new UserMealResponse(userMealDTOS, totalValues);
