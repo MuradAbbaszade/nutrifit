@@ -21,11 +21,11 @@ public class Meal extends BaseEntity<MealDTO> {
     private Long id;
 
     private String name;
-    private BigDecimal cal;
-    private BigDecimal protein;
-    private BigDecimal fat;
-    private BigDecimal sugar;
-    private BigDecimal carbs;
+    private Double cal;
+    private Double protein;
+    private Double fat;
+    private Double sugar;
+    private Double carbs;
 
     @Column(columnDefinition = "TEXT")
     private String description;

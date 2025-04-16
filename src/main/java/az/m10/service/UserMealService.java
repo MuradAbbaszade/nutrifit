@@ -32,7 +32,7 @@ public class UserMealService {
         this.mealRepository = mealRepository;
     }
 
-    public UserMealDTO addUserMeal(Long userId, Long mealId, BigDecimal quantity) {
+    public UserMealDTO addUserMeal(Long userId, Long mealId, Float quantity) {
         userRepository.findById(userId).orElseThrow(
                 () -> new CustomNotFoundException("User not found.")
         );
@@ -73,27 +73,23 @@ public class UserMealService {
     }
 
     public TotalMealValuesDTO calculateTotalMealValues(Page<UserMealDTO> userMealDTOS) {
-        BigDecimal totalProtein = BigDecimal.ZERO;
-        BigDecimal totalCarbs = BigDecimal.ZERO;
-        BigDecimal totalCal = BigDecimal.ZERO;
-        BigDecimal totalFat = BigDecimal.ZERO;
-        BigDecimal totalSugar = BigDecimal.ZERO;
+        double totalProtein = 0.0, totalCarbs = 0.0, totalCal = 0.0, totalFat = 0.0, totalSugar = 0.0;
 
-        BigDecimal unitAdjustment = new BigDecimal(100);
+        double unitAdjustment = 100.0;
 
         for (UserMealDTO userMealDTO : userMealDTOS) {
             MealDTO meal = userMealDTO.getMeal();
-            BigDecimal quantity = userMealDTO.getQuantity();
+            double quantity = userMealDTO.getQuantity();
 
-            BigDecimal multiplier = isWeightOrVolumeUnit(userMealDTO.getMeal().getUnitType())
-                    ? quantity.divide(unitAdjustment)
+            double multiplier = isWeightOrVolumeUnit(userMealDTO.getMeal().getUnitType())
+                    ? quantity / unitAdjustment
                     : quantity;
 
-            totalProtein = totalProtein.add(meal.getProtein().multiply(multiplier));
-            totalCarbs = totalCarbs.add(meal.getCarbs().multiply(multiplier));
-            totalCal = totalCal.add(meal.getCal().multiply(multiplier));
-            totalFat = totalFat.add(meal.getFat().multiply(multiplier));
-            totalSugar = totalSugar.add(meal.getSugar().multiply(multiplier));
+            totalProtein += meal.getProtein() * multiplier;
+            totalCarbs += meal.getCarbs() * multiplier;
+            totalCal += meal.getCal() * multiplier;
+            totalFat += meal.getFat() * multiplier;
+            totalSugar += meal.getSugar() * multiplier;
         }
 
         return new TotalMealValuesDTO(totalProtein, totalCarbs, totalCal, totalFat, totalSugar);

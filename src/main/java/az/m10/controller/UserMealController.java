@@ -30,7 +30,7 @@ public class UserMealController {
     }
 
     @PostMapping
-    public ResponseEntity<UserMealDTO> addUserMeal(Principal principal, @RequestParam Long mealId, @RequestParam BigDecimal quantity) {
+    public ResponseEntity<UserMealDTO> addUserMeal(Principal principal, @RequestParam Long mealId, @RequestParam Float quantity) {
         UserMealDTO userMeal = userMealService.addUserMeal(getAuthenticatedUserId(principal), mealId, quantity);
         return ResponseEntity.ok(userMeal);
     }

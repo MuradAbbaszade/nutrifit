@@ -21,15 +21,15 @@ public class MealDTO extends BaseDTO<Meal> {
     @NotNull
     private String name;
     @NotNull
-    private BigDecimal cal;
+    private Double cal;
     @NotNull
-    private BigDecimal protein;
+    private Double protein;
     @NotNull
-    private BigDecimal fat;
+    private Double fat;
     @NotNull
-    private BigDecimal sugar;
+    private Double sugar;
     @NotNull
-    private BigDecimal carbs;
+    private Double carbs;
     private String description;
     @NotNull
     private MealType type;

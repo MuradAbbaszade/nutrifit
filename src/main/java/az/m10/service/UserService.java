@@ -2,7 +2,11 @@ package az.m10.service;
 
 import az.m10.domain.Meal;
 import az.m10.domain.User;
+import az.m10.domain.enums.ActivityLevel;
+import az.m10.domain.enums.Gender;
+import az.m10.domain.enums.Goal;
 import az.m10.dto.MealDTO;
+import az.m10.dto.NutritionRequirement;
 import az.m10.dto.UserDTO;
 import az.m10.exception.CustomNotFoundException;
 import az.m10.repository.UserRepository;
@@ -11,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +71,49 @@ public class UserService {
         }
         userRepository.save(user);
         return user.toDto();
+    }
+
+    public NutritionRequirement calculateDailyNutritionRequirement(Long id){
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new CustomNotFoundException("Entity not found.")
+        );
+        double bmr = calculateBMR(user);
+        double tdee = bmr * getActivityMultiplier(user.getActivityLevel());
+        double calories = adjustCaloriesForGoal(tdee, user.getGoal());
+
+        double protein = user.getWeight() * 2.0;
+        double fat = (calories * 0.25) / 9;
+        double remainingCalories = calories - (protein * 4 + fat * 9);
+        double carbs = remainingCalories / 4;
+        double sugar = carbs * 0.15;
+        return new NutritionRequirement(remainingCalories, protein, fat, carbs, sugar);
+    }
+
+    private double calculateBMR(User user) {
+        if (user.getGender() == Gender.MALE) {
+            return 10 * user.getWeight() + 6.25 * user.getHeight() - 5 * user.getAge() + 5;
+        } else {
+            return 10 * user.getWeight() + 6.25 * user.getHeight() - 5 * user.getAge() - 161;
+        }
+    }
+
+    private double getActivityMultiplier(ActivityLevel level) {
+        switch (level) {
+            case PASSIVE: return 1.2;
+            case LOW_ACTIVE: return 1.375;
+            case ACTIVE: return 1.55;
+            case VERY_ACTIVE: return 1.725;
+            default: return 1.2;
+        }
+    }
+
+    private double adjustCaloriesForGoal(double calories, Goal goal) {
+        switch (goal) {
+            case WEIGHT_LOSS: return calories - 500;
+            case WEIGHT_GAIN: return calories + 500;
+            case MAINTAIN_WEIGHT:
+            default: return calories;
+        }
     }
 
     public User findByUsername(String username) {

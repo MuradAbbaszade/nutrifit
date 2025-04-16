@@ -22,7 +22,7 @@ public class UserMealDTO extends BaseDTO<UserMeal> {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private MealDTO meal;
 
-    private BigDecimal quantity;
+    private Float quantity;
 
     @Override
     public UserMeal toEntity(Optional<UserMeal> existingEntity) {

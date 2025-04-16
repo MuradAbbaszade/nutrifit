@@ -39,7 +39,7 @@ public class UserMeal extends BaseEntity<UserMealDTO> {
     @Column(nullable = false)
     private LocalDate date;
 
-    private BigDecimal quantity;
+    private Float quantity;
 
     @Override
     public UserMealDTO toDto() {
