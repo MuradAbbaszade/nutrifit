@@ -2,6 +2,7 @@ package az.m10.controller;
 
 import az.m10.auth.UserDetailsService;
 import az.m10.domain.User;
+import az.m10.domain.enums.MealType;
 import az.m10.dto.UserMealDTO;
 import az.m10.dto.UserMealResponse;
 import az.m10.service.UserMealService;
@@ -48,6 +49,17 @@ public class UserMealController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         UserMealResponse response = userMealService.getUserMealsByDate(getAuthenticatedUserId(principal), date, page, size);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/by-type")
+    public ResponseEntity<UserMealResponse> getUserMealsByDateAndType(
+            Principal principal,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam MealType type,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        UserMealResponse response = userMealService.getUserMealsByDateAndType(getAuthenticatedUserId(principal), date, type , page, size);
         return ResponseEntity.ok(response);
     }
 

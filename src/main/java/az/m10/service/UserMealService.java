@@ -1,6 +1,7 @@
 package az.m10.service;
 
 import az.m10.domain.UserMeal;
+import az.m10.domain.enums.MealType;
 import az.m10.domain.enums.UnitType;
 import az.m10.dto.MealDTO;
 import az.m10.dto.TotalMealValuesDTO;
@@ -59,6 +60,14 @@ public class UserMealService {
     public UserMealResponse getUserMealsByDate(Long userId, LocalDate date, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<UserMealDTO> userMealDTOS = userMealRepository.findByUserIdAndDate(userId, date, pageable).map(UserMeal::toDto);
+        TotalMealValuesDTO totalValues = calculateTotalMealValues(userMealDTOS);
+
+        return new UserMealResponse(userMealDTOS, totalValues);
+    }
+
+    public UserMealResponse getUserMealsByDateAndType(Long userId, LocalDate date, MealType type, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<UserMealDTO> userMealDTOS = userMealRepository.findByUserIdAndDateAndType(userId, date, type, pageable).map(UserMeal::toDto);
         TotalMealValuesDTO totalValues = calculateTotalMealValues(userMealDTOS);
 
         return new UserMealResponse(userMealDTOS, totalValues);
