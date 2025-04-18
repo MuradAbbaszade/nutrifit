@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,30 @@ public class UserService {
         return user.toDto();
     }
 
-    public NutritionRequirement calculateDailyNutritionRequirement(Long id){
+    public UserDTO partialUpdate(Long id, UserDTO dto, MultipartFile profileImageFile) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+
+        if (dto.getUsername() != null) user.setUsername(dto.getUsername());
+        if (dto.getPassword() != null) user.setPassword(dto.getPassword());
+        if (dto.getFullName() != null) user.setFullName(dto.getFullName());
+        if (dto.getProfileImageUrl() != null) user.setProfileImageUrl(dto.getProfileImageUrl());
+        if (dto.getGender() != null) user.setGender(dto.getGender());
+        if (dto.getAge() != null) user.setAge(dto.getAge());
+        if (dto.getHeight() != null) user.setHeight(dto.getHeight());
+        if (dto.getWeight() != null) user.setWeight(dto.getWeight());
+        if (dto.getGoal() != null) user.setGoal(dto.getGoal());
+        if (dto.getActivityLevel() != null) user.setActivityLevel(dto.getActivityLevel());
+
+        if (profileImageFile != null && !profileImageFile.isEmpty()) {
+            user.setProfileImageUrl(fileUtil.saveImage(profileImageFile, PROFILE_IMAGE_PATH));
+        }
+
+        userRepository.save(user);
+        return user.toDto();
+    }
+
+    public NutritionRequirement calculateDailyNutritionRequirement(Long id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new CustomNotFoundException("Entity not found.")
         );
@@ -101,20 +125,28 @@ public class UserService {
 
     private double getActivityMultiplier(ActivityLevel level) {
         switch (level) {
-            case PASSIVE: return 1.2;
-            case LOW_ACTIVE: return 1.375;
-            case ACTIVE: return 1.55;
-            case VERY_ACTIVE: return 1.725;
-            default: return 1.2;
+            case PASSIVE:
+                return 1.2;
+            case LOW_ACTIVE:
+                return 1.375;
+            case ACTIVE:
+                return 1.55;
+            case VERY_ACTIVE:
+                return 1.725;
+            default:
+                return 1.2;
         }
     }
 
     private double adjustCaloriesForGoal(double calories, Goal goal) {
         switch (goal) {
-            case WEIGHT_LOSS: return calories - 500;
-            case WEIGHT_GAIN: return calories + 500;
+            case WEIGHT_LOSS:
+                return calories - 500;
+            case WEIGHT_GAIN:
+                return calories + 500;
             case MAINTAIN_WEIGHT:
-            default: return calories;
+            default:
+                return calories;
         }
     }
 

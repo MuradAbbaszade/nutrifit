@@ -73,6 +73,13 @@ public class UserController {
         return ResponseEntity.ok(userService.calculateDailyNutritionRequirement(getAuthenticatedUserId(principal)));
     }
 
+    @PatchMapping
+    public ResponseEntity<UserDTO> partialUpdate(Principal principal, @RequestPart(required = false) UserDTO dto,
+                                                 @ModelAttribute ImageDTO imageDTO) {
+        UserDTO updatedUser = userService.partialUpdate(getAuthenticatedUserId(principal), dto, imageDTO.getImage());
+        return ResponseEntity.ok(updatedUser);
+    }
+
     private Long getAuthenticatedUserId(Principal principal) {
         User user = (User) userDetailsService.loadUserByUsername(principal.getName());
         return user.getId();
