@@ -21,6 +21,7 @@ public class UserDTO extends BaseDTO<User> {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String username;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String profileImageUrl;
     private Gender gender;
     private Integer age;

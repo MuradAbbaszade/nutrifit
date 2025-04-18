@@ -81,7 +81,6 @@ public class UserService {
         if (dto.getUsername() != null) user.setUsername(dto.getUsername());
         if (dto.getPassword() != null) user.setPassword(dto.getPassword());
         if (dto.getFullName() != null) user.setFullName(dto.getFullName());
-        if (dto.getProfileImageUrl() != null) user.setProfileImageUrl(dto.getProfileImageUrl());
         if (dto.getGender() != null) user.setGender(dto.getGender());
         if (dto.getAge() != null) user.setAge(dto.getAge());
         if (dto.getHeight() != null) user.setHeight(dto.getHeight());
