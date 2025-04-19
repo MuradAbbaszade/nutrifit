@@ -9,7 +9,6 @@ FROM openjdk:11-jre-slim
 
 WORKDIR /app
 
-COPY --from=build /app/build/libs /app/
-RUN mv /app/*.jar /app/app.jar
+COPY --from=build /app/build/libs/nutrifit-1.0-SNAPSHOT.jar app.jar
 
 CMD ["java", "-Xmx256m", "-jar", "app.jar"]
