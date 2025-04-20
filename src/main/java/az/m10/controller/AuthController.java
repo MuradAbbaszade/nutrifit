@@ -9,7 +9,6 @@ import az.m10.dto.UserDTO;
 import az.m10.exception.CustomNotFoundException;
 import az.m10.service.UserService;
 import az.m10.util.JwtUtil;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -72,7 +71,7 @@ public class AuthController {
         return new JwtResponse(token, requestRefreshToken, user.toDto().getProfileImageUrl());
     }
 
-    @GetMapping
+    @GetMapping("/me")
     public ResponseEntity<UserDTO> getAuthenticatedUser(Principal principal){
         User user = (User) userDetailsService.loadUserByUsername(principal.getName());
         return ResponseEntity.ok(user.toDto());
