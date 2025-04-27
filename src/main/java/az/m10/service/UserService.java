@@ -109,7 +109,7 @@ public class UserService {
         double carbs = Math.round((calories * 0.50) / 4);
         double sugar = Math.round(carbs * 0.15);
 
-        return new NutritionRequirement(calories, protein, fat, carbs, sugar);
+        return new NutritionRequirement(calories, protein, carbs, fat, sugar);
     }
 
     private double calculateBMR(User user) {

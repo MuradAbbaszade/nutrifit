@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://dpg-cvis14ogjchc73bvocn0-a.oregon-postgres.render.com:5432/nutrifit_g7ml
-    username: nutrifit_g7ml_user
-    password: rchjjNjafmPptMRm78kDKU9Hai5v7syI
-    driverClassName: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
@@ -21,7 +21,7 @@ jwt:
     refresh: 2592000000
     prefix: Bearer
   signing:
-    key: nutrifitnutrifitnutrifitnutrifitnutrifitnutrifitnutrifitnutrifitnutrifitnutrifitnutrifitnutrifitnutrifitnutrifit
+    key: ${SIGNING_KEY}
   authorities:
     key: roles
   header:
