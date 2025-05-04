@@ -78,15 +78,17 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
 
-        if (dto.getUsername() != null) user.setUsername(dto.getUsername());
-        if (dto.getPassword() != null) user.setPassword(dto.getPassword());
-        if (dto.getFullName() != null) user.setFullName(dto.getFullName());
-        if (dto.getGender() != null) user.setGender(dto.getGender());
-        if (dto.getAge() != null) user.setAge(dto.getAge());
-        if (dto.getHeight() != null) user.setHeight(dto.getHeight());
-        if (dto.getWeight() != null) user.setWeight(dto.getWeight());
-        if (dto.getGoal() != null) user.setGoal(dto.getGoal());
-        if (dto.getActivityLevel() != null) user.setActivityLevel(dto.getActivityLevel());
+        if (dto != null) {
+            if (dto.getUsername() != null) user.setUsername(dto.getUsername());
+            if (dto.getPassword() != null) user.setPassword(dto.getPassword());
+            if (dto.getFullName() != null) user.setFullName(dto.getFullName());
+            if (dto.getGender() != null) user.setGender(dto.getGender());
+            if (dto.getAge() != null) user.setAge(dto.getAge());
+            if (dto.getHeight() != null) user.setHeight(dto.getHeight());
+            if (dto.getWeight() != null) user.setWeight(dto.getWeight());
+            if (dto.getGoal() != null) user.setGoal(dto.getGoal());
+            if (dto.getActivityLevel() != null) user.setActivityLevel(dto.getActivityLevel());
+        }
 
         if (profileImageFile != null && !profileImageFile.isEmpty()) {
             user.setProfileImageUrl(fileUtil.saveImage(profileImageFile, PROFILE_IMAGE_PATH));
