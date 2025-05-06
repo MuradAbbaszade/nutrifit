@@ -42,10 +42,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    @ExceptionHandler(value = {JsonParseException.class, NullPointerException.class, IOException.class, DateTimeParseException.class})
-    protected ResponseEntity<Object> handleServerException(Exception ex, WebRequest request) {
-        String bodyOfResponse = ex.getMessage();
-        log.info("An error occurred: {}", bodyOfResponse);
-        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
-    }
+//    @ExceptionHandler(value = {JsonParseException.class, NullPointerException.class, IOException.class, DateTimeParseException.class})
+//    protected ResponseEntity<Object> handleServerException(Exception ex, WebRequest request) {
+//        String bodyOfResponse = ex.getMessage();
+//        log.info("An error occurred: {}", bodyOfResponse);
+//        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+//    }
 }
