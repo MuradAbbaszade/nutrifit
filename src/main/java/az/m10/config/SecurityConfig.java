@@ -38,11 +38,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .antMatchers("/api/v1/auth/sign-in").permitAll()
                         .antMatchers("/api/v1/auth/sign-up").permitAll()
-                        .antMatchers("/api/v1/location/").hasAnyAuthority("ADMIN")
-                        .antMatchers("/api/v1/location/search").hasAnyAuthority("VOLUNTEER", "ADMIN")
-                        .antMatchers("/api/v1/reservation/**").hasAnyAuthority("VOLUNTEER","ADMIN")
-                        .antMatchers("/api/v1/admin/**").hasAnyAuthority("ADMIN")
-                        .antMatchers("/api/v1/reservation/admin/**").hasAnyAuthority("ADMIN")
+                        .antMatchers("/api/v1/user-meals/**").authenticated()
+                        .antMatchers("/api/v1/user-favorite-meals/**").authenticated()
+                        .antMatchers("/api/v1/user-favorite-meals/**").authenticated()
+                        .antMatchers("/api/v1/users/nutrition-requirement").authenticated()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(authenticationTokenFilterBean(),
